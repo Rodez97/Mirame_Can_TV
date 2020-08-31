@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="schemas.android.com/apk/res-auto"
+  android:orientation="vertical"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:gravity="center_vertical">
+  <item>
+    <color android:color="@color/background_floating_material_dark"/>
+  </item>
+  <item>
+    <bitmap
+        android:src="@drawable/mirameLogoLetrasBlanco"
+        android:gravity="center"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:tileMode="disabled"/>
+  </item>
+</layer-list>

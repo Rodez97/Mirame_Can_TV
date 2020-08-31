@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:componentes="clr-namespace:MirameCanTV.Componentes"
+             xmlns:Fuentes="clr-namespace:MirameCanTV.Clases" 
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             x:Class="MirameCanTV.MainPage"
+             x:Name="MainBase">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Contáctanos" Order="Secondary" Clicked="Contactanos_Clicked"/>
+        <ToolbarItem Text="Configuración" Order="Secondary" Clicked="Configuracion_Clicked"/>
+        <ToolbarItem Text="Directo" Order="Primary" Clicked="backToStream_Clicked" IconImageSource="TV_Red.png"/>
+    </ContentPage.ToolbarItems>
+
+    <StackLayout x:Name="Contenedor" CompressedLayout.IsHeadless="True">
+
+        <componentes:ReproductorPersonalizado 
+            x:Name="Repro"/>
+
+        <CollectionView
+            x:Name="ColeccionPrincipal"
+            ItemsSource="{Binding Elementos}"
+            ItemSizingStrategy="MeasureFirstItem"
+            Margin="10">
+            <CollectionView.Header>
+                <!--#region Sección Categorías-->
+                <CollectionView 
+                    ItemsSource="{x:Static Fuentes:VariablesEstaticas.Programas}" 
+                    ItemSizingStrategy="MeasureAllItems" 
+                    VerticalOptions="Center" 
+                    HorizontalOptions="Center"
+                    HeightRequest="130"
+                    SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <pancakeview:PancakeView 
+                                CornerRadius="10,10,0,0"
+                                BackgroundGradientStartPoint="1,1"
+                                BackgroundGradientEndPoint="1,0"
+                                BorderThickness="2">
+                                <pancakeview:PancakeView.BackgroundGradientStops>
+                                    <pancakeview:GradientStopCollection>
+                                        <pancakeview:GradientStop Color="#FFAA70" Offset="1" />
+                                        <pancakeview:GradientStop Color="#FFAA70" Offset="0.5" />
+                                        <pancakeview:GradientStop Color="#FFC9A4" Offset="0" />
+                                    </pancakeview:GradientStopCollection>
+                                </pancakeview:PancakeView.BackgroundGradientStops>
+                                <pancakeview:PancakeView.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Categorias_Tapped" NumberOfTapsRequired="1"/>
+                                </pancakeview:PancakeView.GestureRecognizers>
+                                <StackLayout Padding="5" CompressedLayout.IsHeadless="True">
+                                    <Button Text="{Binding Icono}" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="80" WidthRequest="80" CornerRadius="40" FontFamily="{DynamicResource IconosFont}" FontSize="50" BackgroundColor="OrangeRed" TextColor="White" InputTransparent="True"/>
+                                    <Label Text="{Binding Title}" MaxLines="2" WidthRequest="50" HorizontalTextAlignment="Center"/>
+                                </StackLayout>
+                            </pancakeview:PancakeView>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+                <!--#endregion-->
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid CompressedLayout.IsHeadless="True">
+                    <OnIdiom x:TypeArguments="pancakeview:PancakeView">
+                        <OnIdiom.Phone>
+                            <componentes:BttrFrameItem 
+                                        ParentBindingContext="{Binding Path=BindingContext, Source={x:Reference MainBase}}"
+                                        Margin="5"/>
+                        </OnIdiom.Phone>
+                        <OnIdiom.Tablet>
+                            <componentes:FrameItemModel 
+                                        ParentBindingContext="{Binding Path=BindingContext, Source={x:Reference MainBase}}"
+                                        Margin="5"/>
+                        </OnIdiom.Tablet>
+                    </OnIdiom>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" HorizontalItemSpacing="5" VerticalItemSpacing="5">
+                    <GridItemsLayout.Span>
+                        <OnIdiom x:TypeArguments="x:Int32">
+                            <OnIdiom.Phone>1</OnIdiom.Phone>
+                            <OnIdiom.Tablet>3</OnIdiom.Tablet>
+                        </OnIdiom>
+                    </GridItemsLayout.Span>
+                </GridItemsLayout>
+            </CollectionView.ItemsLayout>
+        </CollectionView>
+
+
+
+    </StackLayout>
+
+
+</ContentPage>

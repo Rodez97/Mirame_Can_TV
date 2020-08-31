@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:mm="clr-namespace:MediaManager.Forms;assembly=MediaManager.Forms" 
+    xmlns:mp="clr-namespace:MediaManager;assembly=MediaManager"
+    xmlns:controls="clr-namespace:MirameCanTV.Componentes"
+    xmlns:Fuentes="clr-namespace:MirameCanTV.Clases"
+    mc:Ignorable="d"
+    x:Class="MirameCanTV.Componentes.ReproductorPersonalizado"
+    BackgroundColor="#000000"
+    x:Name="GridPlayer">
+    <Grid.Resources>
+        <Style TargetType="Button">
+            <Setter Property="FontFamily" Value="{DynamicResource IconosFont}"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+    </Grid.Resources>
+
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="Reproductor_Tapped"/>
+        </Grid.GestureRecognizers>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+    <Grid Grid.RowSpan="2" x:Name="GridVideo">
+        <BoxView x:Name="FondoVideo" HorizontalOptions="FillAndExpand" BackgroundColor="Black" />
+        <RefreshView x:Name="CargaVideoTV" IsRefreshing="True" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Padding="0">
+        <mm:VideoView 
+            ShowControls="False"
+            x:Name="Player"
+            VerticalOptions="FillAndExpand" 
+            HorizontalOptions="FillAndExpand"
+            VideoAspect="AspectFit"
+            Margin="0"
+            BackgroundColor="Black"/>
+        </RefreshView>
+    </Grid>
+    <Grid x:Name="Controles" VerticalOptions="End" Grid.Row="1" BackgroundColor="Black" Opacity="0">
+        <Grid.RowDefinitions>
+            <!--<RowDefinition Height="Auto"/>-->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!--#region [Obsolete] Barra de posición en caso de ser necesaria-->
+        <!--Posición-->
+        <!--<controls:PositionSlider 
+                    x:Name="positionSlider"
+                    BindingContext="{x:Reference Player}"
+                    Duration="{Binding Duration}"
+                    Position="{Binding Position}"
+                    ValueChanged="positionSlider_ValueChanged">
+            <controls:PositionSlider.Triggers>
+                <DataTrigger 
+                            TargetType="controls:PositionSlider"
+                            Binding="{Binding State}"
+                            Value="{x:Static mp:Player.MediaPlayerState.Buffering}">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+                <DataTrigger 
+                            TargetType="controls:PositionSlider"
+                            Binding="{Binding Path=IsStream, Source={x:Reference GridPlayer}}"
+                            Value="True">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </controls:PositionSlider.Triggers>
+        </controls:PositionSlider>-->
+        <!---->
+        <!--#endregion-->
+        <StackLayout Orientation="Horizontal" Grid.Row="1">
+            <Button
+                Text="{x:Static Fuentes:Iconos.Reproducir}"
+                HorizontalOptions="CenterAndExpand"
+                Clicked="Play_Clicked"
+                BindingContext="{x:Reference GridPlayer}">
+                <Button.Triggers>
+                    <DataTrigger 
+                        TargetType="Button"
+                        Binding="{Binding State}"
+                        Value="{x:Static mp:Player.MediaPlayerState.Playing}">
+                        <Setter Property="Text" Value="{x:Static Fuentes:Iconos.Pausar}" />
+                    </DataTrigger>
+                    <DataTrigger 
+                        TargetType="Button"
+                        Binding="{Binding State}"
+                        Value="{x:Static mp:Player.MediaPlayerState.Buffering}">
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+
+            <Button 
+                Text="{x:Static Fuentes:Iconos.FullscreenCollapse}"
+                HorizontalOptions="CenterAndExpand" 
+                Clicked="Maximizar_Clicked" 
+                BindingContext="{x:Reference GridPlayer}">
+                <Button.Triggers>
+                    <DataTrigger
+                        TargetType="Button"
+                        Binding="{Binding IsFullscreen}"
+                        Value="False">
+                        <Setter Property="Text" Value="{x:Static Fuentes:Iconos.Fullscreen}" />
+                    </DataTrigger>
+                </Button.Triggers>
+            </Button>
+            
+        </StackLayout>
+    </Grid>
+
+</Grid>

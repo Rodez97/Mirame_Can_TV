@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<yummy:PancakeView  
+    xmlns:yummy="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Fuentes="clr-namespace:MirameCanTV.Clases" xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+    mc:Ignorable="d"
+    x:Class="MirameCanTV.Componentes.FrameItemModel"
+    BorderColor="DarkRed"
+    BorderThickness="2"
+    CornerRadius="10,0,0,10">
+    <!--Propiedades del Marco-->
+    <yummy:PancakeView.Shadow>
+        <yummy:DropShadow Color="#000000" Offset="5,5" />
+    </yummy:PancakeView.Shadow>
+
+
+    <yummy:PancakeView.GestureRecognizers>
+        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" NumberOfTapsRequired="1"/>
+    </yummy:PancakeView.GestureRecognizers>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="180" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <ffimageloading:CachedImage 
+            x:Name="Imagen"
+            BitmapOptimizations="True"
+            Grid.ColumnSpan="2"
+            ErrorPlaceholder="MirameLogo.jpg"
+            Aspect="AspectFill"
+            DownsampleToViewSize="True" />
+
+
+        <Label 
+            x:Name="Titulo"
+            Text="{Binding Title}"
+            TextColor="Black"
+            FontSize="Subtitle"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Padding="5" 
+            MaxLines="2" 
+            LineBreakMode="TailTruncation"/>
+        <Label 
+            x:Name="Fecha"
+            Text="{Binding UploadDate}"
+            VerticalOptions="CenterAndExpand"
+            FontSize="Small"
+            Grid.Row="2"
+            Margin="5" />
+        <Button
+            Text="{x:Static Fuentes:Iconos.Compartir}"
+            FontFamily="{DynamicResource IconosFont}"
+            Clicked="Button_Clicked"
+            FontSize="Large"
+            TextColor="Black"
+            BackgroundColor="Transparent"
+            Grid.Row="2"
+            Grid.Column="1"/>
+    </Grid>
+</yummy:PancakeView>
